@@ -1,0 +1,10 @@
+﻿Interface Segregation - 
+Single class responsibility - Game, Board, Player, Square
+
+Board is responsible for know if a position is valid or not.
+
+A game consists of a board and a player.
+A player has a game and a move.
+A game has a board
+
+A player has moves which are implemented by the move class.

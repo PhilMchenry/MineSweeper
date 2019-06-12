@@ -1,42 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MineSweeperLogic
 {
     public class Game : IGame
     {
-            public Game()
+
+
+        //Game Constants
+        private const int numberOfLives = 3;
+        private const int numberOfMines = 30;
+        private const int xAxisSize = 8;
+        private const int yAxisSixe = 8;
+
+        public Game()
         {
-            //Game is a 8X8 square
-            board = new Board(GenerateHorizontalArray.HorizontalChessArray(8),8, numberOfMines);
-
+            //Create Dependencies
+            //Generate Mines
+            var generateMines = new GenerateMines(xAxisSize,yAxisSixe);
+            //Game is a 8X8 square and has a set of mines
+            Board = new Board(GenerateHorizontalArray.HorizontalChessArray(xAxisSize), yAxisSixe, generateMines.GenerateMineLocation(numberOfMines));
+            //Start Position of Player
             var startPosition = new Position(0, 1);
-
-            player = new Player(this, new NormalMove(), startPosition, numberOfLives);
+            //Create player with move, startposition,numberoflive, board and boardrules
+            Player = new Player(this, new Move(), startPosition, numberOfLives, new BoardRules(Board));
 
             //Attach event handler
-            player.playerEvent += HandlePlayerEvent;
+            Player.playerEvent += HandlePlayerEvent;
 
         }
 
 
-        public IBoard board { get; }
+        public IBoard Board { get; }
 
-        public IPlayer player { get;  }
-
-        private const int numberOfLives = 3;
-        private const int numberOfMines = 3;
+        public IPlayer Player { get;  }
+        public bool GameOver { get; internal set; }
 
         public void HandlePlayerEvent(object sender, EventArgs e)
         {
             PlayerEvents playerEvents = (PlayerEvents)e;
 
-            
-            Console.WriteLine(playerEvents.resultMessage);
+            Console.WriteLine("Last Message " + playerEvents.resultMessage);
             Console.WriteLine("Moves " + playerEvents.numberOfMoves.ToString());
             Console.WriteLine("CurrentPosition " + playerEvents.resultPosition);
             Console.WriteLine("Number Of Lives " + playerEvents.numberOfLives.ToString());
+
+            //Check for GameOver
+            GameOver = playerEvents.GameOver;
 
         }
 

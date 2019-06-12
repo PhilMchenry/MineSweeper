@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MineSweeperLogic
 {
-    public interface IPosition
+    public interface IPosition : IEquatable<IPosition>
     {
 
         int Vertical { get; set; }

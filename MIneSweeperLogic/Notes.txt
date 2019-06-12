@@ -1,10 +1,17 @@
-﻿Interface Segregation - 
-Single class responsibility - Game, Board, Player, Square
+﻿Interface Segregation - Each interface should only have what is needed.
+Single class responsibility - Game, Board, BoardRules, Player, Position, Move.
 
-Board is responsible for know if a position is valid or not.
 
-A game consists of a board and a player.
-A player has a game and a move.
-A game has a board
+A game consists of a board and a player. It Observes the player.
 
-A player has moves which are implemented by the move class.
+A board has a size and some mines.
+
+BoardRules have a board that they are applied.
+The rules are is that a valid position on the board and is that position a mine.
+
+A player has a game, boardrules that apply to a board and a way to move.
+A player is also responsible for understanding how board rules affect it.
+The player will also know the number of lives and number of moves.
+
+A move is responsible for processing a key stroke and working out how far to move.
+

@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace Tests
 {
-    public class NormalMoveTest
+    public class MoveTest
     {
         [SetUp]
         public void Setup()
@@ -11,12 +11,10 @@ namespace Tests
             
         }
 
-        private Board board;
-
         [Test]
         public void MoveLeftSuccess()
         {
-            var moveTest = new MineSweeperLogic.NormalMove();
+            var moveTest = new MineSweeperLogic.Move();
             var positionTest = new Position(3, 4);
 
             var positionResult = moveTest.MoveLeft(positionTest);
@@ -29,7 +27,7 @@ namespace Tests
         [Test]
         public void MoveRightSuccess()
         {
-            var moveTest = new MineSweeperLogic.NormalMove();
+            var moveTest = new MineSweeperLogic.Move();
             var positionTest = new Position(3, 4);
 
             var positionResult = moveTest.MoveRight(positionTest);
@@ -42,7 +40,7 @@ namespace Tests
         [Test]
         public void MoveUpSuccess()
         {
-            var moveTest = new MineSweeperLogic.NormalMove();
+            var moveTest = new MineSweeperLogic.Move();
             var positionTest = new Position(3, 4);
 
             var positionResult = moveTest.MoveUp(positionTest);
@@ -54,7 +52,7 @@ namespace Tests
         [Test]
         public void MoveDownSuccess()
         {
-            var moveTest = new MineSweeperLogic.NormalMove();
+            var moveTest = new MineSweeperLogic.Move();
             var positionTest = new Position(3, 4);
 
             var positionResult = moveTest.MoveDown(positionTest);

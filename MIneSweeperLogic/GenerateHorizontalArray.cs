@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MineSweeperLogic
 {
+    /// <summary>
+    /// Will create a string array representing the first 8 letters of the Alphabet
+    /// </summary>
     public  class GenerateHorizontalArray
     {
 
-        private static string[] constHorizontalArray = { "A", "B", "C", "D", "E", "F", "G", "H" };
+        private static readonly string[] constHorizontalArray = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
        public static string[] HorizontalChessArray(int size)
         {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MineSweeperLogic
+﻿namespace MineSweeperLogic
 {
     public interface IMove
     {
@@ -11,5 +7,7 @@ namespace MineSweeperLogic
         IPosition MoveRight(IPosition currentPosition);
         IPosition MoveUp(IPosition currentPosition);
         IPosition MoveDown(IPosition currentPosition);
+
+        IPosition ProcessKeyStroke(string keyStroke, IPosition currentPosition);
     }
 }

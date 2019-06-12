@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MineSweeperLogic;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Tests
         [Test]
         public void BoardInstatiatedCorrectlyForXandY()
         {
-            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, 0);
+            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, null);
 
             Assert.AreEqual(4, boardToTest.HorizontalArray.Length);
             Assert.AreEqual(4, boardToTest.VerticalAxis);
@@ -25,63 +26,87 @@ namespace Tests
         [Test]
         public void BoardBottomReached()
         {
-            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, 0);
-
-            var results = boardToTest.IsThisPositionValid(new Position(1, 0));
+            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, null);
+            var boardRules = new BoardRules(boardToTest);
+            var results = boardRules.ProcessRules(new Position(1, 0));
 
             Assert.AreEqual(false, results.ValidVertical);
             Assert.AreEqual(true, results.ValidHorizontal);
             Assert.AreEqual(false, results.ValidMove);
-            Assert.AreEqual(false, results.YouHaveWon);
+            Assert.AreEqual(false, results.ReachedTheEnd);
 
-            Assert.AreEqual("Bottom Reached and Valid Horizontal", results.Text);
+            Assert.AreEqual("Bottom Reached", results.Text);
 
         }
 
         [Test]
         public void BoardTopReached()
         {
-            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, 0);
-
-            var results = boardToTest.IsThisPositionValid(new Position(1, 5));
+            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, null);
+            var boardRules = new BoardRules(boardToTest);
+            var results = boardRules.ProcessRules(new Position(1, 5));
 
             Assert.AreEqual(false, results.ValidVertical);
             Assert.AreEqual(true, results.ValidHorizontal);
             Assert.AreEqual(false, results.ValidMove);
-            Assert.AreEqual(false, results.YouHaveWon);
+            Assert.AreEqual(false, results.ReachedTheEnd);
 
-            Assert.AreEqual("Top Reached and Valid Horizontal", results.Text);
+            Assert.AreEqual("Top Reached", results.Text);
         }
 
         [Test]
         public void BoardLeftReached()
         {
-            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, 0);
-
-            var results = boardToTest.IsThisPositionValid(new Position(-1, 2));
+            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, null);
+            var boardRules = new BoardRules(boardToTest);
+            var results = boardRules.ProcessRules(new Position(-1, 2));
 
             Assert.AreEqual(true, results.ValidVertical);
             Assert.AreEqual(false, results.ValidHorizontal);
             Assert.AreEqual(false, results.ValidMove);
-            Assert.AreEqual(false, results.YouHaveWon);
+            Assert.AreEqual(false, results.ReachedTheEnd);
 
-            Assert.AreEqual("Left Reached and Valid Vertical", results.Text);
+            Assert.AreEqual("Left Reached", results.Text);
         }
 
         [Test]
-        public void BoardRightReachedAndYouWin()
+        public void BoardRightReachedAndYouReachedTheEnd()
         {
-            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, 0);
-
-            var results = boardToTest.IsThisPositionValid(new Position(4, 2));
+            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, null);
+            var boardRules = new BoardRules(boardToTest);
+            var results = boardRules.ProcessRules(new Position(4, 2));
 
             Assert.AreEqual(true, results.ValidVertical);
             Assert.AreEqual(false, results.ValidHorizontal);
             Assert.AreEqual(true, results.ValidMove);
-            Assert.AreEqual(true, results.YouHaveWon);
+            Assert.AreEqual(true, results.ReachedTheEnd);
 
-            Assert.AreEqual("You have won", results.Text);
+            Assert.AreEqual("Reached The End", results.Text);
         }
+
+
+        [Test]
+        public void BoardRulesIHaveHitAMineOnTheWinningEdge()
+        {
+
+            //PositionToMoveto
+            var positionToMoveTo = new Position(4, 2);
+            //Create a MineLocation at the same postion
+            var minePositions = new List<IPosition> {positionToMoveTo};
+
+            var boardToTest = new Board(GenerateHorizontalArray.HorizontalChessArray(4), 4, minePositions);
+            var boardRules = new BoardRules(boardToTest);
+            var results = boardRules.ProcessRules(positionToMoveTo);
+
+            Assert.AreEqual(true, results.ValidVertical);
+            Assert.AreEqual(false, results.ValidHorizontal);
+            Assert.AreEqual(true, results.ValidMove);
+            Assert.AreEqual(true, results.ReachedTheEnd);
+            Assert.AreEqual(true, results.HitAMine);
+
+            Assert.AreEqual("Reached The End", results.Text);
+        }
+
 
     }
 }

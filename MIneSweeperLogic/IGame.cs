@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MineSweeperLogic
+﻿namespace MineSweeperLogic
 {
     public interface IGame
     {
-        IBoard board { get; }
+        IBoard Board { get; }
 
-        IPlayer player { get; }
+        IPlayer Player { get; }
+
+        bool GameOver { get;  }
     }
 }

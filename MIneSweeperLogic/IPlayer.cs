@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MineSweeperLogic
 {
@@ -13,10 +11,7 @@ namespace MineSweeperLogic
 
         IPosition CurrentPosition { get; }
 
-        void MovePositionLeft();
-        void MovePositionRight();
-        void MovePositionUp();
-        void MovePositionDown();
+        void ProcessKeyStroke(string keyPress);
 
         event EventHandler playerEvent;
 

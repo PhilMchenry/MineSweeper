@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MineSweeperLogic
 {
     public interface IBoard
     {
 
-        bool IsThisPositionAMine(IPosition position);
-
         string[] HorizontalArray { get; }
 
         int VerticalAxis { get; }
 
-        BoardResults IsThisPositionValid(IPosition position);
-
         int NumberOfMines { get; }
+
+        List<IPosition> MinePositions { get; }
     }
 }

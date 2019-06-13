@@ -10,8 +10,8 @@ namespace ConsoleApp1
             Console.WriteLine("Use the arrow keys only to navigate and esc to quit");
             //Create the Game
             var theGame = new Game();
-            Console.WriteLine("You are on " +theGame.Board.HorizontalArray.Length.ToString()+"x"+" _" +
-                              theGame.Board.VerticalAxis.ToString() + "board starting from " +
+            Console.WriteLine("You are on " +theGame.Board.HorizontalArray.Length.ToString()+"x"+
+                              theGame.Board.VerticalAxis.ToString() + " board starting from " +
                               theGame.Board.HorizontalArray[theGame.Player.CurrentPosition.Horizontal] +
                               theGame.Player.CurrentPosition.Vertical.ToString());
 

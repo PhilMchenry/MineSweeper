@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
+using MineSweeperLogic.Interfaces;
 
 namespace Tests
 {
@@ -24,9 +25,9 @@ namespace Tests
         public void PlayerTestInvalidLeftDoesNotUpdatePositionOrMoves()
         {
             var initialPosition = new Position(0, 2);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3,CreateBoardRules());
+            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3,CreateBoardRules(),new PlayerReaction());
 
-            PlayerToTest.playerEvent += HandlePlayerEvent;
+            PlayerToTest.PlayerEvent += HandlePlayerEvent;
 
             PlayerToTest.ProcessKeyStroke(ConsoleKey.LeftArrow.ToString());
 
@@ -45,9 +46,9 @@ namespace Tests
         public void PlayerTestInvalidUpDoesNotUpdatePositionOrMoves()
         {
             var initialPosition = new Position(0, 8);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules());
+            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules(),new PlayerReaction());
 
-            PlayerToTest.playerEvent += HandlePlayerEvent;
+            PlayerToTest.PlayerEvent += HandlePlayerEvent;
 
             PlayerToTest.ProcessKeyStroke(ConsoleKey.UpArrow.ToString());
 
@@ -60,9 +61,9 @@ namespace Tests
         public void PlayerTestInvalidDownDoesNotUpdatePositionOrMoves()
         {
             var initialPosition = new Position(0, 1);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules());
+            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules(),new PlayerReaction());
 
-            PlayerToTest.playerEvent += HandlePlayerEvent;
+            PlayerToTest.PlayerEvent += HandlePlayerEvent;
 
            PlayerToTest.ProcessKeyStroke(ConsoleKey.DownArrow.ToString());
 
@@ -75,9 +76,9 @@ namespace Tests
         public void PlayerTestHaveMadeItOut()
         {
             var initialPosition = new Position(7, 1);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules());
+            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules(),new PlayerReaction());
 
-            PlayerToTest.playerEvent += TestHandlePlayerEvent;
+            PlayerToTest.PlayerEvent += TestHandlePlayerEvent;
 
             PlayerToTest.ProcessKeyStroke(ConsoleKey.RightArrow.ToString());
 
@@ -88,7 +89,7 @@ namespace Tests
         {
             PlayerEvents playerEvents = (PlayerEvents)e;
 
-           Assert.AreEqual("You have made it safely out", playerEvents.resultPosition);
+           Assert.AreEqual("You have made it safely out", playerEvents.resultMessage);
            
 
         }

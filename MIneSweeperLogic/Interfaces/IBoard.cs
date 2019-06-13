@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MineSweeperLogic
+namespace MineSweeperLogic.Interfaces
 {
     public interface IBoard
     {

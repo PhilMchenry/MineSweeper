@@ -1,4 +1,4 @@
-﻿namespace MineSweeperLogic
+﻿namespace MineSweeperLogic.Interfaces
 {
     public interface IMove
     {

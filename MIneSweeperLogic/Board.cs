@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
@@ -32,25 +33,5 @@ namespace MineSweeperLogic
         }
 
         public List<IPosition> MinePositions { get; }
-    }
-
-    public class BoardResults
-    {
-   
-        public BoardResults(string text, bool vHorizontal, bool vVertical, bool vMove)
-        {
-            Text = text;
-            ValidHorizontal = vHorizontal;
-            ValidVertical = vVertical;
-            ValidMove = vMove;
-        }
-
-
-        public string Text { get; }
-        public bool ValidHorizontal { get; } = false;
-        public bool ValidVertical { get; } = false;
-        public bool ReachedTheEnd { get; set; }
-        public bool ValidMove { get; } = false;
-        public bool HitAMine { get; set; }
     }
 }

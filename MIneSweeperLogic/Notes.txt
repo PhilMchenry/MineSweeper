@@ -1,17 +1,34 @@
-﻿Interface Segregation - Each interface should only have what is needed.
+﻿Principles used
+Interface Segregation - Each interface should only have what is needed.
 Single class responsibility - Game, Board, BoardRules, Player, Position, Move.
+Dependency injection(Besides Game class)
+Refactoring with unit tests.
 
-
+Guide to classes
 A game consists of a board and a player. It Observes the player.
+The Game is creating the dependencies, could use a IOC container but felt overkill for this.
 
 A board has a size and some mines.
 
 BoardRules have a board that they are applied.
-The rules are is that a valid position on the board and is that position a mine.
+The rules are 'is that a valid position on the board' and 'is that position a mine'.
+BoardRules return BoardResults. 
 
-A player has a game, boardrules that apply to a board and a way to move.
-A player is also responsible for understanding how board rules affect it.
+A player has a game, boardrules that apply to a board and a way to move and react.
+A player is also responsible for understanding how board rules that affect it via the reaction.
 The player will also know the number of lives and number of moves.
 
 A move is responsible for processing a key stroke and working out how far to move.
+Could potentially be extended with other moves.
+A reaction changes the state of the player and decides on the game outcome.
+Could potentially be extended with other reactions.
 
+Niggles,
+Why is there logic in Player to decide game over? Should that not be in board rules?
+Have some self-referencing objects, PlayerReaction is a dependency on Player and takes a player via a method?
+GenerateHorizontalArray is a static method, Ideally GenerateMines should be as well.
+BoardResults.ValidHorizontal and BoardResults.ValidVertical could be viewed as superfluous but are usefull to work out the board edges.
+BoardResults itself could of been put onto player as properties but there already feels too much on player.
+Could of made more use of Moq.
+HorizontalArray of Letter to number, feels like there should be a better way of doing this.
+No Test coverage in Console Application.

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
@@ -21,11 +23,11 @@ namespace MineSweeperLogic
             Board = new Board(GenerateHorizontalArray.HorizontalChessArray(xAxisSize), yAxisSixe, generateMines.GenerateMineLocation(numberOfMines));
             //Start Position of Player
             var startPosition = new Position(0, 1);
-            //Create player with move, startposition,numberoflive, board and boardrules
-            Player = new Player(this, new Move(), startPosition, numberOfLives, new BoardRules(Board));
+            //Create player with the game, a way to move, startposition, numberoflives, board, boardrules and a reaction
+            Player = new Player(this, new Move(), startPosition, numberOfLives, new BoardRules(Board),new PlayerReaction());
 
             //Attach event handler
-            Player.playerEvent += HandlePlayerEvent;
+            Player.PlayerEvent += HandlePlayerEvent;
 
         }
 
@@ -39,15 +41,22 @@ namespace MineSweeperLogic
         {
             PlayerEvents playerEvents = (PlayerEvents)e;
 
-            Console.WriteLine("Last Message " + playerEvents.resultMessage);
-            Console.WriteLine("Moves " + playerEvents.numberOfMoves.ToString());
-            Console.WriteLine("CurrentPosition " + playerEvents.resultPosition);
-            Console.WriteLine("Number Of Lives " + playerEvents.numberOfLives.ToString());
-
-            //Check for GameOver
-            GameOver = playerEvents.GameOver;
-
+            if (playerEvents.GameOver)
+            {
+                //Check for GameOver
+                GameOver = playerEvents.GameOver;
+                Console.WriteLine("Game Over because " + playerEvents.resultMessage);
+                Console.WriteLine("Final Score " + playerEvents.numberOfMoves.ToString());
+                Console.WriteLine("CurrentPosition " + playerEvents.resultPosition);
+                Console.WriteLine("Number Of Lives " + playerEvents.numberOfLives.ToString());
+            }
+            else
+            {
+                Console.WriteLine("Last Message " + playerEvents.resultMessage);
+                Console.WriteLine("Moves " + playerEvents.numberOfMoves.ToString());
+                Console.WriteLine("CurrentPosition " + playerEvents.resultPosition);
+                Console.WriteLine("Number Of Lives " + playerEvents.numberOfLives.ToString());
+            }
         }
-
     }
 }

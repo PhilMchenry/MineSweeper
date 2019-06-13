@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MineSweeperLogic
+namespace MineSweeperLogic.Interfaces
 {
     public interface IPosition : IEquatable<IPosition>
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {

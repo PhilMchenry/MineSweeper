@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MineSweeperLogic;
+using MineSweeperLogic.Interfaces;
 using NUnit.Framework;
 
 namespace Tests

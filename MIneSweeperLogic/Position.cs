@@ -1,4 +1,6 @@
-﻿namespace MineSweeperLogic
+﻿using MineSweeperLogic.Interfaces;
+
+namespace MineSweeperLogic
 {
     /// <summary>
     /// Holds x and y axis plus allows comparison

@@ -8,7 +8,7 @@ using Moq;
 
 namespace Tests
 {
-    public class PlayerReactionTests
+    public class GameMineSweeperRulesTests
     {
         [SetUp]
         public void Setup()
@@ -16,9 +16,8 @@ namespace Tests
             
         }
 
-
         [Test]
-        public void PlayerReactTestOutOfLives()
+        public void GameMineSweeperRulesTestOutOfLives()
         {
             var mplayerMock = new Mock<IPlayer>();
             mplayerMock.SetupGet(x => x.NoOfLives).Returns(0);
@@ -27,14 +26,14 @@ namespace Tests
             var mboardResults = new Mock<BoardResults>();
             
 
-            var testResults = new PlayerReaction().PlayerReact(mboardResults.Object, mplayerMock.Object);
+            var testResults = new GameMineSweeperRules().ApplyGameRules(mboardResults.Object, mplayerMock.Object);
 
             Assert.AreEqual(true, testResults.GameOver);
             Assert.AreEqual("Dead ", testResults.resultPosition);
             Assert.AreEqual("Out of Lives Ouch", testResults.resultMessage);
         }
         [Test]
-        public void PlayerReactTestMadeItOutSafely()
+        public void GameMineSweeperRulesTestMadeItOutSafely()
         {
             var mplayerMock = new Mock<IPlayer>();
             mplayerMock.SetupGet(x=>x.NoOfLives).Returns(3);
@@ -42,7 +41,7 @@ namespace Tests
             var mboardResults = new Mock<BoardResults>();
             mboardResults.SetupGet(x => x.ReachedTheEnd).Returns(true);
 
-            var testResults = new PlayerReaction().PlayerReact(mboardResults.Object, mplayerMock.Object);
+            var testResults = new GameMineSweeperRules().ApplyGameRules(mboardResults.Object, mplayerMock.Object);
 
 
             Assert.AreEqual(true, testResults.GameOver);
@@ -51,7 +50,7 @@ namespace Tests
         }
 
         [Test]
-        public void PlayerReactTestHitAMine()
+        public void GameMineSweeperRulesTestHitAMine()
         {
             var mplayerMock = new Mock<IPlayer>();
             mplayerMock.SetupGet(x => x.NoOfLives).Returns(3);
@@ -61,7 +60,7 @@ namespace Tests
             mboardResults.SetupGet(x => x.ReachedTheEnd).Returns(false);
             mboardResults.SetupGet(x => x.HitAMine).Returns(true);
 
-            var testResults = new PlayerReaction().PlayerReact(mboardResults.Object, mplayerMock.Object);
+            var testResults = new GameMineSweeperRules().ApplyGameRules(mboardResults.Object, mplayerMock.Object);
 
             mplayerMock.Verify(x=>x.RemoveLive());
             Assert.AreEqual(false, testResults.GameOver);
@@ -70,7 +69,7 @@ namespace Tests
         }
 
         [Test]
-        public void PlayerReactTestValidMove()
+        public void GameMineSweeperRulesTestValidMove()
         {
             var mplayerMock = new Mock<IPlayer>();
             mplayerMock.SetupGet(x => x.NoOfLives).Returns(3);
@@ -80,7 +79,7 @@ namespace Tests
             mboardResults.SetupGet(x => x.ReachedTheEnd).Returns(false);
             mboardResults.SetupGet(x => x.ValidMove).Returns(true);
 
-            var testResults = new PlayerReaction().PlayerReact(mboardResults.Object, mplayerMock.Object);
+            var testResults = new GameMineSweeperRules().ApplyGameRules(mboardResults.Object, mplayerMock.Object);
 
             mplayerMock.Verify(x=>x.AddMove());
             Assert.AreEqual(false, testResults.GameOver);
@@ -89,7 +88,7 @@ namespace Tests
         }
 
         [Test]
-        public void PlayerReactTestInValidMoveResetPosition()
+        public void GameMineSweeperRulesTestInValidMoveResetPosition()
         {
             var mplayerMock = new Mock<IPlayer>();
             mplayerMock.SetupGet(x => x.NoOfLives).Returns(3);
@@ -99,7 +98,7 @@ namespace Tests
             mboardResults.SetupGet(x => x.ReachedTheEnd).Returns(false);
             mboardResults.SetupGet(x => x.ValidMove).Returns(false);
 
-            var testResults = new PlayerReaction().PlayerReact(mboardResults.Object, mplayerMock.Object);
+            var testResults = new GameMineSweeperRules().ApplyGameRules(mboardResults.Object, mplayerMock.Object);
 
             mplayerMock.Verify(x => x.ResetPosition());
             Assert.AreEqual(false, testResults.GameOver);

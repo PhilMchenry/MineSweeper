@@ -12,10 +12,8 @@ namespace MineSweeperLogic.Interfaces
         void ProcessKeyStroke(string keyPress);
 
         event EventHandler PlayerEvent;
-
-        IGame MyGame { get; }
-
         string FriendlyPosition();
+
         void AddMove();
         void RemoveLive();
         void ResetPosition();

@@ -18,22 +18,22 @@ namespace Tests
 
         private IBoardRules CreateBoardRules()
         {
-            return new BoardRules(new Board(GenerateHorizontalArray.HorizontalChessArray(8),8,null));
+            return new BoardMineSweeperRules(new Board(GenerateHorizontalArray.HorizontalChessArray(8),8,null));
         }
 
         [Test]
         public void PlayerTestInvalidLeftDoesNotUpdatePositionOrMoves()
         {
             var initialPosition = new Position(0, 2);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3,CreateBoardRules(),new PlayerReaction());
+            var playerToTest = new Player( new Move(), initialPosition, 3,CreateBoardRules(),new GameMineSweeperRules());
 
-            PlayerToTest.PlayerEvent += HandlePlayerEvent;
+            playerToTest.PlayerEvent += HandlePlayerEvent;
 
-            PlayerToTest.ProcessKeyStroke(ConsoleKey.LeftArrow.ToString());
+            playerToTest.ProcessKeyStroke(ConsoleKey.LeftArrow.ToString());
 
-            Assert.AreEqual(0, PlayerToTest.CurrentPosition.Horizontal);
-            Assert.AreEqual(2, PlayerToTest.CurrentPosition.Vertical);
-            Assert.AreEqual(0, PlayerToTest.NoOfMoves);
+            Assert.AreEqual(0, playerToTest.CurrentPosition.Horizontal);
+            Assert.AreEqual(2, playerToTest.CurrentPosition.Vertical);
+            Assert.AreEqual(0, playerToTest.NoOfMoves);
         }
 
 
@@ -46,42 +46,41 @@ namespace Tests
         public void PlayerTestInvalidUpDoesNotUpdatePositionOrMoves()
         {
             var initialPosition = new Position(0, 8);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules(),new PlayerReaction());
+            var playerToTest = new Player(new Move(), initialPosition, 3, CreateBoardRules(),new GameMineSweeperRules());
 
-            PlayerToTest.PlayerEvent += HandlePlayerEvent;
+            playerToTest.PlayerEvent += HandlePlayerEvent;
 
-            PlayerToTest.ProcessKeyStroke(ConsoleKey.UpArrow.ToString());
+            playerToTest.ProcessKeyStroke(ConsoleKey.UpArrow.ToString());
 
-            Assert.AreEqual(0, PlayerToTest.CurrentPosition.Horizontal);
-            Assert.AreEqual(8, PlayerToTest.CurrentPosition.Vertical);
-            Assert.AreEqual(0, PlayerToTest.NoOfMoves);
+            Assert.AreEqual(0, playerToTest.CurrentPosition.Horizontal);
+            Assert.AreEqual(8, playerToTest.CurrentPosition.Vertical);
+            Assert.AreEqual(0, playerToTest.NoOfMoves);
         }
 
         [Test]
         public void PlayerTestInvalidDownDoesNotUpdatePositionOrMoves()
         {
             var initialPosition = new Position(0, 1);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules(),new PlayerReaction());
+            var playerToTest = new Player(new Move(), initialPosition, 3, CreateBoardRules(),new GameMineSweeperRules());
 
-            PlayerToTest.PlayerEvent += HandlePlayerEvent;
+            playerToTest.PlayerEvent += HandlePlayerEvent;
 
-           PlayerToTest.ProcessKeyStroke(ConsoleKey.DownArrow.ToString());
+           playerToTest.ProcessKeyStroke(ConsoleKey.DownArrow.ToString());
 
-            Assert.AreEqual(0, PlayerToTest.CurrentPosition.Horizontal);
-            Assert.AreEqual(1, PlayerToTest.CurrentPosition.Vertical);
-            Assert.AreEqual(0, PlayerToTest.NoOfMoves);
+            Assert.AreEqual(0, playerToTest.CurrentPosition.Horizontal);
+            Assert.AreEqual(1, playerToTest.CurrentPosition.Vertical);
+            Assert.AreEqual(0, playerToTest.NoOfMoves);
         }
 
         [Test]
         public void PlayerTestHaveMadeItOut()
         {
             var initialPosition = new Position(7, 1);
-            var PlayerToTest = new Player(new Game(), new Move(), initialPosition, 3, CreateBoardRules(),new PlayerReaction());
+            var playerToTest = new Player( new Move(), initialPosition, 3, CreateBoardRules(),new GameMineSweeperRules());
 
-            PlayerToTest.PlayerEvent += TestHandlePlayerEvent;
+            playerToTest.PlayerEvent += TestHandlePlayerEvent;
 
-            PlayerToTest.ProcessKeyStroke(ConsoleKey.RightArrow.ToString());
-
+            playerToTest.ProcessKeyStroke(ConsoleKey.RightArrow.ToString());
         }
 
 
@@ -89,9 +88,35 @@ namespace Tests
         {
             PlayerEvents playerEvents = (PlayerEvents)e;
 
-           Assert.AreEqual("You have made it safely out", playerEvents.resultMessage);
-           
+            Assert.AreEqual("You have made it safely out", playerEvents.resultMessage);
 
         }
+
+
+        private IBoardRules CreateBoardWithMinesRules()
+        {
+            //Generate Mines
+           var minesEverywhere = GenerateMines.GenerateMineLocation(64, 8, 8);
+
+            return new BoardMineSweeperRules(new Board(GenerateHorizontalArray.HorizontalChessArray(8), 8, minesEverywhere));
+        }
+
+        [Test]
+        public void PlayerTestHitAMineAndLivesGoDown()
+        {
+            var initialPosition = new Position(0, 1);
+            var playerToTest = new Player(new Move(), initialPosition, 3, CreateBoardWithMinesRules(), new GameMineSweeperRules());
+
+            playerToTest.PlayerEvent += HandlePlayerEvent;
+
+            playerToTest.ProcessKeyStroke(ConsoleKey.RightArrow.ToString());
+
+            Assert.AreEqual(1, playerToTest.CurrentPosition.Horizontal);
+            Assert.AreEqual(1, playerToTest.CurrentPosition.Vertical);
+            Assert.AreEqual(1, playerToTest.NoOfMoves);
+            Assert.AreEqual(2, playerToTest.NoOfLives);
+        }
+
+
     }
 }

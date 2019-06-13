@@ -3,6 +3,9 @@ using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
+    /// <summary>
+    /// A move is responsible for processing a key stroke and working out how far to move.
+    /// </summary>
     public class Move : IMove
     {
         

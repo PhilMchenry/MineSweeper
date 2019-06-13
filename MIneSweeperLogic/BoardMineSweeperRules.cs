@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
-    public class BoardRules : IBoardRules
+    /// <summary>
+    /// The BoardMineSweeperRules are, 
+    /// ValidPosition on the board
+    /// is that position a mine and remove from board if it is.
+    /// BoardRules return BoardResults. 
+    /// </summary>
+    public class BoardMineSweeperRules : IBoardRules
     {
         private readonly IBoard board;
 
-        public BoardRules(IBoard board)
+        public BoardMineSweeperRules(IBoard board)
         {
             this.board = board;
         }
@@ -20,14 +27,21 @@ namespace MineSweeperLogic
             return boardResultsValidPosition;
         }
 
+        public string[] BoardHorizontalConvertArray => board.HorizontalArray;
+
         public bool CheckForMines(IPosition currentPosition)
         {
             //Check if I have mines
             if (board.NumberOfMines <= 0) return false;
             var mineResult = board.MinePositions.Find(x => x.Equals(currentPosition));
-
-            if (mineResult != null) return true;
+            //If I have hit one remove it and return true
+            if (mineResult != null)
             {
+                board.RemoveMine(currentPosition);
+
+                return true;
+            }
+            else{
                 return false;
             }
         }

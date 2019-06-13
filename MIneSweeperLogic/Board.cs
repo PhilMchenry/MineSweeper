@@ -3,10 +3,11 @@ using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
+    /// <summary>
+    /// A board has a size, some mines and a Horizontal axis reference. Is also responsible for removing it's own mines.
+    /// </summary>
     public class Board : IBoard
     {
-        
-
         public Board(string[] xAxisArray, int yAxis, List<IPosition> mineLocation)
         {
            
@@ -31,7 +32,10 @@ namespace MineSweeperLogic
                 }
             }
         }
-
         public List<IPosition> MinePositions { get; }
+        public void RemoveMine(IPosition currentPosition)
+        {
+            MinePositions.Remove(currentPosition);
+        }
     }
 }

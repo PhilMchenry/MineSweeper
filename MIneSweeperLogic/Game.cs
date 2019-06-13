@@ -4,34 +4,19 @@ using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
+    /// <summary>
+    /// A game consists of a board and a player. The game listens to events from the player.
+    /// The GenerateGame static class is creating the dependencies, could use a IOC container but felt overkill for this.
+    /// </summary>
     public class Game : IGame
     {
-
-
-        //Game Constants
-        private const int numberOfLives = 3;
-        private const int numberOfMines = 30;
-        private const int xAxisSize = 8;
-        private const int yAxisSixe = 8;
-
-        public Game()
+        public Game(IBoard board, IPlayer player)
         {
-            //Create Dependencies
-            //Generate Mines
-            var generateMines = new GenerateMines(xAxisSize,yAxisSixe);
-            //Game is a 8X8 square and has a set of mines
-            Board = new Board(GenerateHorizontalArray.HorizontalChessArray(xAxisSize), yAxisSixe, generateMines.GenerateMineLocation(numberOfMines));
-            //Start Position of Player
-            var startPosition = new Position(0, 1);
-            //Create player with the game, a way to move, startposition, numberoflives, board, boardrules and a reaction
-            Player = new Player(this, new Move(), startPosition, numberOfLives, new BoardRules(Board),new PlayerReaction());
-
+            Board = board;
+            Player = player;
             //Attach event handler
             Player.PlayerEvent += HandlePlayerEvent;
-
         }
-
-
         public IBoard Board { get; }
 
         public IPlayer Player { get;  }
@@ -44,7 +29,7 @@ namespace MineSweeperLogic
             if (playerEvents.GameOver)
             {
                 //Check for GameOver
-                GameOver = playerEvents.GameOver;
+                GameOver = true;
                 Console.WriteLine("Game Over because " + playerEvents.resultMessage);
                 Console.WriteLine("Final Score " + playerEvents.numberOfMoves.ToString());
                 Console.WriteLine("CurrentPosition " + playerEvents.resultPosition);
@@ -52,6 +37,7 @@ namespace MineSweeperLogic
             }
             else
             {
+                GameOver = false;
                 Console.WriteLine("Last Message " + playerEvents.resultMessage);
                 Console.WriteLine("Moves " + playerEvents.numberOfMoves.ToString());
                 Console.WriteLine("CurrentPosition " + playerEvents.resultPosition);

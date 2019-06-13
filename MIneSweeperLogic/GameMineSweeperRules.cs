@@ -5,9 +5,16 @@ using MineSweeperLogic.Interfaces;
 
 namespace MineSweeperLogic
 {
-   public class PlayerReaction : IReact
+    /// <summary>
+    /// Current GameMineSweeperRules
+    /// If I perform a valid Move by number of moves increases otherwise I stay where I am.
+    /// If I hit a mine I lose a life.
+    /// If I run out of lives it's game over.
+    /// If the board tells me I have reached the end I have won.
+    /// </summary>
+   public class GameMineSweeperRules : IGameRules
     {
-        public PlayerEvents PlayerReact(BoardResults boardResults, IPlayer player)
+        public PlayerEvents ApplyGameRules(BoardResults boardResults, IPlayer player)
         {
 
             //Change Player state

@@ -13,7 +13,11 @@ namespace MineSweeperLogic
         public bool GameOver;
     }
 
-
+    /// <summary>
+    /// A player has a game, boardrules that apply to a board and a way to move and GameRules on how to react.
+    ///A player is also responsible for implementing board rules and game rules that are started with its movement.
+    ///The player will also know the number of lives and number of moves.
+    /// </summary>
     public class Player : IPlayer
     {
        
@@ -22,19 +26,18 @@ namespace MineSweeperLogic
         private int numberOfMoves;
         private int numberOfLives;
         private readonly IBoardRules boardRules;
-        private readonly IReact playerReaction;
+        private readonly IGameRules playerReaction;
         public Position ResetPosition { get; internal set; }
 
         //Player events so it can be subscribed to
         public delegate void PlayerEventHandler(object sender, PlayerEvents e);
 
         public event EventHandler PlayerEvent;
-        public IGame MyGame { get; }
 
-        public Player(IGame game, IMove move, IPosition startPosition,
-            int lives, IBoardRules boardRules, IReact playerReaction)
+        public Player( IMove move, IPosition startPosition,
+            int lives, IBoardRules boardRules, IGameRules playerReaction)
         {
-            this.MyGame = game;
+            
             this.move = move;
 
             numberOfLives = lives;
@@ -51,7 +54,7 @@ namespace MineSweeperLogic
 
         public string FriendlyPosition()
         {
-            return MyGame.Board.HorizontalArray[CurrentPosition.Horizontal] + currentPosition.Vertical.ToString();
+            return boardRules.BoardHorizontalConvertArray[CurrentPosition.Horizontal] + currentPosition.Vertical.ToString();
         }
 
         public void AddMove()
@@ -77,8 +80,8 @@ namespace MineSweeperLogic
             var proposedPosition = move.ProcessKeyStroke(keyPress,currentPosition);
             //What was board result
             var result = boardRules.ProcessRules(proposedPosition);
-            //Calculate player reaction
-            var playerEvents = playerReaction.PlayerReact(result, this);
+            //Apply Game Rules
+            var playerEvents = playerReaction.ApplyGameRules(result, this);
             //Tell whoever is listening what my state is.
             if (PlayerEvent != null) PlayerEvent(this, playerEvents);
         }

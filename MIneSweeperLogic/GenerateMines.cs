@@ -9,26 +9,23 @@ namespace MineSweeperLogic
     /// </summary>
     public class GenerateMines
     {
-        private readonly int maxHorizontal;
-        private readonly int maxVertical;
+       
 
 
-        public GenerateMines(int maxHorizontal, int maxVertical)
+        public GenerateMines()
         {
-            this.maxHorizontal = maxHorizontal;
-            this.maxVertical = maxVertical;
-           
+            
         }
 
-        public List<IPosition> GenerateMineLocation(int noOfMines)
+        public static List<IPosition> GenerateMineLocation(int noOfMines, int maxHorizontal, int maxVertical)
         {
             //check I have enough squares 
 
             var totalSquares = maxHorizontal * maxVertical;
 
-            if (totalSquares <= noOfMines)
+            if (totalSquares < noOfMines)
             {
-                throw new ArgumentException("Mines equal or greater than available squares");
+                throw new ArgumentException("Mines greater than available squares");
             }
 
             var returnMine = new List<IPosition>();

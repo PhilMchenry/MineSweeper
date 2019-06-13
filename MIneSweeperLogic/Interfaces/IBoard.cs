@@ -12,5 +12,6 @@ namespace MineSweeperLogic.Interfaces
         int NumberOfMines { get; }
 
         List<IPosition> MinePositions { get; }
+        void RemoveMine(IPosition currentPosition);
     }
 }

@@ -17,25 +17,16 @@ namespace Tests
         [Test]
         public void NumberOfMinesExceedsAvailableSquares()
         {
-
-            var testGenerateMine = new GenerateMines(1,1);
-
-            Assert.Throws<ArgumentException>(() => testGenerateMine.GenerateMineLocation(2));
+            Assert.Throws<ArgumentException>(() => GenerateMines.GenerateMineLocation(2,1,1));
         }
 
         [Test]
         public void TwoMinesGeneratedOk()
         {
-
-            var testGenerateMine = new GenerateMines(2, 2);
-
-            var resultList = testGenerateMine.GenerateMineLocation(2);
-
-            
+            var resultList = GenerateMines.GenerateMineLocation(2,2,2);
 
             Assert.AreEqual(2, resultList.Count);
 
-          
         }
 
 

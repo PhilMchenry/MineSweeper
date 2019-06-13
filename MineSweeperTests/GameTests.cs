@@ -16,7 +16,7 @@ namespace Tests
         [Test]
         public void GameInstantiatesWithPlayerStartingAt01()
         {
-            var gameToTest = new Game();
+            var gameToTest = GenerateGame.GenerateAGame(8,8,5,5,0,1);
 
             Assert.AreEqual(0, gameToTest.Player.CurrentPosition.Horizontal);
             Assert.AreEqual(1, gameToTest.Player.CurrentPosition.Vertical);
@@ -26,7 +26,7 @@ namespace Tests
         [Test]
         public void GameInstantiatesWith30Mines()
         {
-            var gameToTest = new Game();
+            var gameToTest = GenerateGame.GenerateAGame(8, 8, 30, 5, 0, 1);
 
             Assert.AreEqual(30, gameToTest.Board.NumberOfMines);
 
@@ -34,7 +34,7 @@ namespace Tests
         [Test]
         public void GameInstantiatesWithAPlayer3Lives()
         {
-            var gameToTest = new Game();
+            var gameToTest = GenerateGame.GenerateAGame(8, 8, 5, 3, 0, 1);
 
             Assert.AreEqual(3, gameToTest.Player.NoOfLives);
 
@@ -42,8 +42,7 @@ namespace Tests
         [Test]
         public void GameStopsOnGameOver()
         {
-            var gameToTest = new Game();
-
+            var gameToTest = GenerateGame.GenerateAGame(8, 8, 5, 3, 0, 1);
             var dummyEvent = new PlayerEvents
             {
                 GameOver = true
@@ -54,6 +53,22 @@ namespace Tests
             Assert.AreEqual(true, gameToTest.GameOver);
 
         }
+
+        [Test]
+        public void GameContinues()
+        {
+            var gameToTest = GenerateGame.GenerateAGame(8, 8, 5, 3, 0, 1);
+            var dummyEvent = new PlayerEvents
+            {
+                GameOver = false
+            };
+
+            gameToTest.HandlePlayerEvent(this, dummyEvent);
+
+            Assert.AreEqual(false, gameToTest.GameOver);
+
+        }
+
     }
 
 }

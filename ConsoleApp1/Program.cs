@@ -1,6 +1,7 @@
 ﻿using System;
 using MineSweeperLogic;
-namespace ConsoleApp1
+
+namespace MineSweeperConsole
 {
     class Program
     {
@@ -9,7 +10,7 @@ namespace ConsoleApp1
             Console.WriteLine("Welcome to Minesweeper");
             Console.WriteLine("Use the arrow keys only to navigate and esc to quit");
             //Create the Game
-            var theGame = new Game();
+            var theGame = GenerateGame.GenerateAGame(8,8,50,3,0,1);
             Console.WriteLine("You are on " +theGame.Board.HorizontalArray.Length.ToString()+"x"+
                               theGame.Board.VerticalAxis.ToString() + " board starting from " +
                               theGame.Board.HorizontalArray[theGame.Player.CurrentPosition.Horizontal] +

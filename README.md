@@ -51,4 +51,4 @@ If the board tells me I have reached the end I have won.
 * BoardResults itself could of been put onto player as properties but there already feels too much on player.
 * HorizontalArray of Letter to number, feels like there should be a better way of doing this, currently limited to 8 characters.
 * No Test coverage in Console Application but trying to keep this simple could also pass a stream into Game from Console.
-* Rules classes(BoardMineSweeperRules and GameMineSweep
+* Rules classes(BoardMineSweeperRules and GameMineSweep could probably further broken down into less if's but have test coverage.

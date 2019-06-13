@@ -3,6 +3,7 @@ Interface Segregation - Each interface should only have what is needed.
 Single class responsibility - Game, Board, BoardRules, Player, Position, Move.
 Dependency injection(Besides Game class)
 Refactoring with unit tests.
+Seperate libraries for Logic and tests away from Console Application
 
 Guide to classes
 A game consists of a board and a player. It Observes the player.
